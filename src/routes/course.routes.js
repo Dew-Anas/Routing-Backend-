@@ -4,10 +4,10 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/",(req,res)=>{
-    res.json({
-        message:"Course Route Working"
-    });
-});
+const { getCourses, addCourse }
+  = require("../controllers/course.controller");
+
+router.get("/", getCourses);
+router.post("/", addCourse);
 
 module.exports = router;

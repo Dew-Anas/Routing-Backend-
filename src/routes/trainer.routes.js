@@ -1,13 +1,11 @@
 
 const express = require("express");
-const { route } = require("./student.routes");
-
 const router= express.Router();
 
-router.get("/", (req,res)=>{
-    res.json({
-        message:"Trainer Router Working"
-    });
-});
+const { getTrainers, addTrainer }
+  = require("../controllers/trainer.controller");
+
+router.get("/", getTrainers);
+router.post("/", addTrainer);
 
 module.exports=router;

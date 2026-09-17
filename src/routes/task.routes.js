@@ -3,10 +3,10 @@ const express =require("express");
 
 const router = express.Router();
 
-router.get("/",(req,res)=>{
-    res.json({
-        message:"Task Route Working"
-    });
-});
+const { getTasks, addTasks }
+  = require("../controllers/task.controller");
+
+router.get("/", getTasks);
+router.post("/", addTasks);
 
 module.exports = router;
