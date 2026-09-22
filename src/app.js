@@ -22,6 +22,14 @@ app.use("/api/tasks", taskRoutes);
 app.get("/test-error",(req,res,next)=>{
     next(new Error("Test error"));
 });
+
+app.get("/health", (req, res) => {
+    res.json({
+        status: "success",
+        message: "Server Running Successfully"
+    });
+});
+
 app.use(errorHandler);
 
 
