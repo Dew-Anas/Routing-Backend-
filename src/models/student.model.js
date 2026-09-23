@@ -18,14 +18,15 @@ const studentSchema = new mongoose.Schema({
         required:true
     },
 
-    courese:{
+    course:{
         type:String,
         required:true
     },
 
     age:{
         type:Number,
-        required:true
+        required:true,
+        min:18
     },
 
     status:{
