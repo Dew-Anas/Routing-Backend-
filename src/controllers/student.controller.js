@@ -1,7 +1,7 @@
 
 const Student = require("../models/student.model");
 
-Student.create()
+
 
 const createStudent= async(req,res)=>{
 
@@ -33,11 +33,7 @@ const createStudent= async(req,res)=>{
 
 };
 
-const getStudents  = (req,res) => {
-    res.json({
-        students:[]
-    });
-};
+
 
 const addStudent =(req,res)=>{
     res.json({
@@ -46,4 +42,34 @@ const addStudent =(req,res)=>{
 
 };
 
-module.exports={getStudents,addStudent,createStudent};
+const getStudents= async(req,res)=>{
+    const students = await Student.find();
+    res.status(200).json({
+        success:true,
+        count:students.length,
+        data:students
+
+    });
+
+};
+
+const getStudentById = async(req,res)=>{
+    const{id}=req.params;
+
+    const student = await Student.findById(id);
+    if(!student){
+        return res.status(404).json({
+            success:false,
+            message:"Student not found"
+        });
+    };
+
+     return res.status(200).json({
+             success:true,
+             data:student
+        });
+
+
+};
+
+module.exports={getStudents,addStudent,createStudent,getStudentById};
