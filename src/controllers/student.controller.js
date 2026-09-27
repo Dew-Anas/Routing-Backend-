@@ -86,7 +86,9 @@ const updateStudents = async(req,res)=>{
 
    const student= await Student.findByIdAndUpdate(id,
     updateData,
-    {new:true}
+    {returnDocument: "after",
+     runValidators:true
+    }
 );
 
    if(!student){
@@ -104,4 +106,22 @@ const updateStudents = async(req,res)=>{
 
 };
 
-module.exports={getStudents,addStudent,createStudent,getStudentById, updateStudents};
+const deleteStudent=async(req,res)=>{
+    const{id} =req.params;
+   const student= await Student.findByIdAndDelete(id)
+
+   if(!student){
+    return res.status(404).json({
+        success:false,
+        message:"Student not found"
+    });
+   }
+
+   res.status(200).json({
+    success:true,
+    message:"Student deleted successfully"
+   })
+
+};
+
+module.exports={getStudents,addStudent,createStudent,getStudentById, updateStudents,deleteStudent};
