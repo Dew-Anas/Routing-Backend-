@@ -1,6 +1,9 @@
 
 
 const User = require("../models/user.model");
+const bcrypt =require("bcrypt");
+
+
 
 const login= async(req,res)=>{
 
@@ -36,4 +39,78 @@ const login= async(req,res)=>{
             });
 };
 
-module.exports = { login };
+const registerUser=async(req,res)=>{
+
+    try{
+    const{name,email,password,role}= req.body;
+
+    if(password.length<6){
+        return res.status(400).json({
+            success:false,
+            message:"password should have minimum 6 characters"
+        });
+
+        
+    };
+
+    if(!name){
+        return res.status(400).json({
+            success:false,
+            message:"Name is required"
+        });
+
+    }
+
+    if(!email){
+        return res.status(400).json({
+            success:false,
+            message:"email is required"
+        });
+    }
+
+
+    if(role!=="Admin" && role!== "Student"){
+            return res.status(400).json({
+                    success:false,
+                    message:"Role must be Admin or Student"
+            });
+    }
+
+    const hashedPassword = await bcrypt.hash(password,10);
+
+    const user = await User.create({
+        name,
+        email,
+        password:hashedPassword,
+        role
+    });
+
+    
+    
+
+     return res.status(201).json({
+        success:true,
+        message:"User registered successfully"
+     })
+    }
+
+    catch(error){
+        console.log(error);
+
+        if (error.code===11000){
+            return res.status(400).json({
+                success:false,
+                message:"Email already exists"
+            })
+        }
+       return res.status(500).json({
+            success:false,
+            message:"something went wrong"
+        })
+
+    }
+
+};
+
+
+module.exports = { login,registerUser };

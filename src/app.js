@@ -7,6 +7,8 @@ const trainerRouters = require("./routes/trainer.routes");
 
 const taskRoutes = require("./routes/task.routes");
 
+const authRoutes= require("./routes/auth.routes");
+
 const logger = require("./middleware/logger.middleware");
 
 const errorHandler =require("./middleware/error.middleware");
@@ -20,6 +22,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/trainers",trainerRouters);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/auth",authRoutes);
 
 app.get("/test-error",(req,res,next)=>{
     next(new Error("Test error"));
