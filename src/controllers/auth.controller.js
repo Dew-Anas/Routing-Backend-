@@ -18,6 +18,17 @@ const login= async(req,res)=>{
 
     console.log("Users count:", await User.countDocuments());
 
+    if(!email)
+        return res.status(400).json({
+            success:false,
+            message:"Email is required"});
+
+
+    if(!password)
+        return res.status(400).json({
+                success:false,
+                message:"password required"});
+
     
     if(!user)
         return res.status(404).json({
@@ -26,7 +37,9 @@ const login= async(req,res)=>{
 
            
 
-           if(password !== user.password) {
+          const isMatch =await bcrypt.compare(password,user.password); 
+          
+          if(!isMatch){
             return res.status(401).json({
                 success:false,
                 message:"invalid password"
