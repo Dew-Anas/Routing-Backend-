@@ -3,10 +3,16 @@
 const express = require("express");
 const router = express.Router();
 
+
+
 const{getStudents,addStudent,createStudent,getStudentById, updateStudents,deleteStudent}
 =require("../controllers/student.controller");
 
-router.get("/",getStudents);
+const authMiddleware = require("../middleware/auth.middleware");
+
+
+
+router.get("/",authMiddleware,getStudents);
 
 router.get("/:id",getStudentById);
 
