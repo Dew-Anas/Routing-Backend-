@@ -10,17 +10,29 @@ const{getStudents,addStudent,createStudent,getStudentById, updateStudents,delete
 
 const authMiddleware = require("../middleware/auth.middleware");
 
+const roleMiddleware = require("../middleware/role.middleware");
+
 
 
 router.get("/",authMiddleware,getStudents);
 
 router.get("/:id",getStudentById);
 
-router.post("/",createStudent);
+router.post("/",
+    authMiddleware,
+    roleMiddleware(["Admin","Trainer"]),
+    createStudent);
 
-router.put("/:id",updateStudents);
+router.put("/:id",
+    authMiddleware,
+    roleMiddleware(["Admin","Trainer"]),
+    updateStudents);
 
-router.delete("/:id",deleteStudent);
+router.delete
+("/:id",
+    authMiddleware,
+    roleMiddleware(["Admin"]),
+    deleteStudent);
 
 
 

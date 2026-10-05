@@ -9,9 +9,13 @@ const taskRoutes = require("./routes/task.routes");
 
 const authRoutes= require("./routes/auth.routes");
 
+const attendanceRoutes=require("./routes/attendance.routes");
+
 const logger = require("./middleware/logger.middleware");
 
 const errorHandler =require("./middleware/error.middleware");
+
+
 
 const app = express();
 
@@ -23,6 +27,8 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/trainers",trainerRouters);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/auth",authRoutes);
+
+app.use("/api/attendance",attendanceRoutes);
 
 app.get("/test-error",(req,res,next)=>{
     next(new Error("Test error"));

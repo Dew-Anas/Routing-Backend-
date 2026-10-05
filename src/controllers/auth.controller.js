@@ -51,7 +51,8 @@ const login= async(req,res)=>{
 
            const token= jwt.sign(
             {
-                email:user.email
+                email:user.email,
+                role:user.role
             },
                 process.env.JWT_SECRET
            );
@@ -93,10 +94,10 @@ const registerUser=async(req,res)=>{
     }
 
 
-    if(role!=="Admin" && role!== "Student"){
+    if(role!=="Admin" && role!== "Student"&&role!=="Trainer"){
             return res.status(400).json({
                     success:false,
-                    message:"Role must be Admin or Student"
+                    message:"Role must be Admin, Student or Trainer"
             });
     }
 

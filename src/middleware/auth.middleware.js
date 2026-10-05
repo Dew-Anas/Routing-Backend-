@@ -31,6 +31,7 @@ const authMiddleware=(req,res,next)=>{
                 message:"Unauthorized"
             });
         }
+        req.user = decoded;
 
         next();
 

@@ -106,22 +106,31 @@ const updateStudents = async(req,res)=>{
 
 };
 
-const deleteStudent=async(req,res)=>{
-    const{id} =req.params;
-   const student= await Student.findByIdAndDelete(id)
+const deleteStudent = async(req,res)=>{
+    try {
+        const {id} = req.params;
 
-   if(!student){
-    return res.status(404).json({
-        success:false,
-        message:"Student not found"
-    });
-   }
+        const student = await Student.findByIdAndDelete(id);
 
-   res.status(200).json({
-    success:true,
-    message:"Student deleted successfully"
-   })
+        if(!student){
+            return res.status(404).json({
+                success:false,
+                message:"Student not found"
+            });
+        }
 
+        res.status(200).json({
+            success:true,
+            message:"Student deleted successfully"
+        });
+
+    } catch(error) {
+        console.log(error);
+        res.status(400).json({
+            success:false,
+            message:"Delete failed"
+        });
+    }
 };
 
 module.exports={getStudents,addStudent,createStudent,getStudentById, updateStudents,deleteStudent};
