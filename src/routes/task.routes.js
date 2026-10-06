@@ -3,10 +3,11 @@ const express =require("express");
 
 const router = express.Router();
 
-const { getTasks, addTasks }
-  = require("../controllers/task.controller");
+const{createTask,getTasks,getTaskById,updateTask}=require("../controllers/task.controller");
 
+router.post("/", createTask);
 router.get("/", getTasks);
-router.post("/", addTasks);
+router.get("/:id", getTaskById);
+router.put("/:id", updateTask);
 
 module.exports = router;

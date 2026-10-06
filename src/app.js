@@ -20,12 +20,17 @@ const errorHandler =require("./middleware/error.middleware");
 const app = express();
 
 app.use(logger);
+
 app.use(express.json());
 
 app.use("/api/students", studentRoutes);
+
 app.use("/api/courses", courseRoutes);
-app.use("/api/trainers",trainerRouters);
+
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api/trainers",trainerRouters);
+
 app.use("/api/auth",authRoutes);
 
 app.use("/api/attendance",attendanceRoutes);
