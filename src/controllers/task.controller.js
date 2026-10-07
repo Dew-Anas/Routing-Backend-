@@ -25,8 +25,17 @@ const createTask = async (req, res) => {
 };
 
 const getTasks = async (req, res) => {
-    const tasks = await Task.find();
 
+    const user = await User.findOne({ email: req.user.email });
+
+   let tasks;
+    if (user.role === "Student") {
+        tasks = await Task.find({ assignedTo: user._id });
+    }
+
+    else{
+        tasks = await Task.find();
+    }
     res.status(200).json({
         status:"success",
         message:"Tasks retrieved successfully",

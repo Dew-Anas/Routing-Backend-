@@ -1,11 +1,14 @@
 const express = require("express");
 
 const studentRoutes = require("./routes/student.routes");
+
 const courseRoutes = require("./routes/course.routes");
 
 const trainerRouters = require("./routes/trainer.routes");
 
 const taskRoutes = require("./routes/task.routes");
+
+const meetingRoutes = require("./routes/meeting.routes");
 
 const authRoutes= require("./routes/auth.routes");
 
@@ -28,6 +31,8 @@ app.use("/api/students", studentRoutes);
 app.use("/api/courses", courseRoutes);
 
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api/meetings", meetingRoutes);
 
 app.use("/api/trainers",trainerRouters);
 
