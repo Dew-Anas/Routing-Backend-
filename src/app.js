@@ -14,9 +14,12 @@ const authRoutes= require("./routes/auth.routes");
 
 const attendanceRoutes=require("./routes/attendance.routes");
 
+const dashboardRoutes = require("./routes/dashboard.routes");
+
 const logger = require("./middleware/logger.middleware");
 
 const errorHandler =require("./middleware/error.middleware");
+
 
 
 
@@ -39,6 +42,8 @@ app.use("/api/trainers",trainerRouters);
 app.use("/api/auth",authRoutes);
 
 app.use("/api/attendance",attendanceRoutes);
+
+app.use("/api/dashboard",dashboardRoutes);
 
 app.get("/test-error",(req,res,next)=>{
     next(new Error("Test error"));

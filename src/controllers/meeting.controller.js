@@ -38,7 +38,16 @@ const createMeeting = async (req, res) => {
 
 const getMeetings = async (req, res) => {
     try {
-    const meetings = await Meeting.find();
+
+        console.log("Logged User:", req.user);
+
+    let meetings;
+
+    if(req.user.role ==="Student"){
+        meetings = await Meeting.find({ studentId: req.user.id });
+    } else {
+        meetings = await Meeting.find();
+    }
 
     res.status(200).json({
         success: true,
@@ -56,6 +65,7 @@ const getMeetings = async (req, res) => {
 const getMeetingById = async (req, res) => {
     const{id}=req.params;
 try{
+
     const meeting= await Meeting.findById(id);
     
 
@@ -64,6 +74,16 @@ try{
             success:false,
             message:"Meeting not found"
         });
+    }
+
+    if(req.user.role ==="Student"){
+        if(meeting.studentId.toString() !== req.user.id){
+            return res.status(403).json({
+            success: false,
+            message: "Access Denied. You can only view your own meetings"
+        });
+    }
+
     }
 
     res.status(200).json({
