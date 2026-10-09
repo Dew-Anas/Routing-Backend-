@@ -1,5 +1,7 @@
 const express = require("express");
 
+const cors = require("cors");
+
 const studentRoutes = require("./routes/student.routes");
 
 const courseRoutes = require("./routes/course.routes");
@@ -16,6 +18,8 @@ const attendanceRoutes=require("./routes/attendance.routes");
 
 const dashboardRoutes = require("./routes/dashboard.routes");
 
+const paymentRoutes = require("./routes/payment.routes");
+
 const logger = require("./middleware/logger.middleware");
 
 const errorHandler =require("./middleware/error.middleware");
@@ -25,6 +29,7 @@ const errorHandler =require("./middleware/error.middleware");
 
 const app = express();
 
+app.use(cors());
 app.use(logger);
 
 app.use(express.json());
@@ -44,6 +49,8 @@ app.use("/api/auth",authRoutes);
 app.use("/api/attendance",attendanceRoutes);
 
 app.use("/api/dashboard",dashboardRoutes);
+
+app.use("/api/payments",paymentRoutes)
 
 app.get("/test-error",(req,res,next)=>{
     next(new Error("Test error"));
